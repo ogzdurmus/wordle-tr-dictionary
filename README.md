@@ -4,7 +4,7 @@ Bu depo, Türkçe Wordle benzeri oyunlar (Wordle TR klonları vb.) geliştirenle
 
 Açık kaynaklı diğer pek çok kelime listesinde karşılaşılan "hello, apple" gibi yabancı sözcüklerin veya "lldog, naler" gibi hatalı ayrıştırılmış rastgele harf dizilerinin oyuna sızması problemi, bu sözlükle tamamen çözülmüştür. 
 
-## 📦 İçerik Yapısı
+##  İçerik Yapısı
 
 Sözlük, oyun mantığına uygun olarak iki ayrı listeden (`TARGET_WORDS` ve `ACCEPTED_WORDS`) oluşmaktadır:
 
@@ -18,7 +18,7 @@ Oyuncuların tahmin yaparken kullanabilecekleri tüm geçerli kelimelerin havuzu
 * **Nasıl Oluşturuldu?** Sadece ve kesinlikle **TDK Sözlüğü'ndeki** 5 harfli Türkçe kelimeler baz alındı. 
 * **Neden?** Oyuncuların rastgele klavye vuruşlarıyla anlamsız şeyler ("LLDOG", "NADOL") yazarak oyunu kırmasını engellemek ve "HAYİR" gibi yazım yanlışlarını oyundan atmak için kelime havuzu sadece gerçek Türkçe kök kelimelerle sınırlandırıldı.
 
-## 🚀 Kullanım (TypeScript / JavaScript / JSON)
+##  Kullanım (TypeScript / JavaScript / JSON)
 
 ### TypeScript
 ```typescript
@@ -37,5 +37,5 @@ const { TARGET_WORDS, ACCEPTED_WORDS } = require('./index.js');
 Eğer kelimeleri kendi sunucunuzdan veya uygulamanızdan çekecekseniz, ham JSON dosyasına doğrudan erişebilirsiniz:
 [words.json](words.json) üzerinden ham veriyi parse edebilirsiniz.
 
-## 💡 Motivasyon
+##  Motivasyon
 Bu veri setinin oluşturulma amacı, Türkçe kelime oyunları geliştirirken açık kaynakta bulunan standart veri setlerinin içindeki anlamsız hece kalıntılarını, fiil çekim hatalarını ve araya karışan İngilizce parazit kelimeleri temizleme zahmetinden geliştiricileri kurtarmaktır.
