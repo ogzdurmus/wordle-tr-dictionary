@@ -39,3 +39,11 @@ Eğer kelimeleri kendi sunucunuzdan veya uygulamanızdan çekecekseniz, ham JSON
 
 ##  Motivasyon
 Bu veri setinin oluşturulma amacı, Türkçe kelime oyunları geliştirirken açık kaynakta bulunan standart veri setlerinin içindeki anlamsız hece kalıntılarını, fiil çekim hatalarını ve araya karışan İngilizce parazit kelimeleri temizleme zahmetinden geliştiricileri kurtarmaktır.
+
+## 📄 Lisans ve Kullanım
+Bu proje **MIT Lisansı** ile lisanslanmıştır. İlgili lisans metni için [LICENSE](LICENSE) dosyasına bakabilirsiniz.
+
+Bu kelime listesini oyunlarınızda, projelerinizde veya akademik çalışmalarınızda dilediğiniz gibi kullanabilirsiniz. Ancak **kullanım durumunda lütfen repoyu ve yazarını referans olarak gösterin.**
+
+**Örnek Atıf:**
+*Türkçe Wordle Kelime Listesi, Oğuz Durmuş tarafından oluşturulmuştur.*
