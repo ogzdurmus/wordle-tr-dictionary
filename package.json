@@ -1,0 +1,33 @@
+{
+  "name": "wordle-tr-dictionary",
+  "version": "1.0.0",
+  "description": "Bu depo, Türkçe Wordle benzeri oyunlar (Wordle TR klonları vb.) geliştirenler için özel olarak temizlenmiş, filtrelenmiş ve optimize edilmiş **5 harfli kelime havuzunu** içermektedir.",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "build": "tsx scripts/build.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ogzdurmus/wordle-tr-dictionary.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ogzdurmus/wordle-tr-dictionary/issues"
+  },
+  "homepage": "https://github.com/ogzdurmus/wordle-tr-dictionary#readme",
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "semantic-release": "^25.0.9",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.1"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  }
+}

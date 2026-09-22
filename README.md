@@ -1,49 +1,84 @@
-# 🇹🇷 Wordle TR - Temiz Kelime Havuzu (Dictionary)
+# 🇹🇷 Wordle TR Dictionary
 
-Bu depo, Türkçe Wordle benzeri oyunlar (Wordle TR klonları vb.) geliştirenler için özel olarak temizlenmiş, filtrelenmiş ve optimize edilmiş **5 harfli kelime havuzunu** içermektedir.
+[![NPM Version](https://img.shields.io/npm/v/wordle-tr-dictionary)](https://www.npmjs.com/package/wordle-tr-dictionary)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 
-Açık kaynaklı diğer pek çok kelime listesinde karşılaşılan "hello, apple" gibi yabancı sözcüklerin veya "lldog, naler" gibi hatalı ayrıştırılmış rastgele harf dizilerinin oyuna sızması problemi, bu sözlükle tamamen çözülmüştür. 
+Türkçe Wordle (ve benzeri 5 harfli kelime oyunları) geliştirenler için optimize edilmiş, temizlenmiş ve kullanıma hazır **NPM Paketi** ve veri havuzu.
 
-##  İçerik Yapısı
+## ✨ Özellikler
 
-Sözlük, oyun mantığına uygun olarak iki ayrı listeden (`TARGET_WORDS` ve `ACCEPTED_WORDS`) oluşmaktadır:
+* **🎯 İki Farklı Kelime Havuzu:**
+  * `TARGET_WORDS` (~1.900 Kelime): Oyunda "günün kelimesi" (cevap) olarak çıkabilecek, nispeten daha yaygın ve bilindik kelimeler.
+  * `ACCEPTED_WORDS` (~5.600 Kelime): Kullanıcıların tahmin olarak klavyeden girebileceği, TDK sözlüğünde yer alan geçerli tüm 5 harfli kelimeler.
+* **🎩 Şapkalı Harf Desteği (Normalizasyon):** 
+  * Kullanıcılar `kabus` veya `kâbus` yazsa bile sistem bunu otomatik algılar. Şapkalı harfler (`Â, Î, Û`) arkaplanda standart karakterlere eşlenir.
+* **🧪 CI/CD ve Test Altyapısı:**
+  * Vitest kullanılarak tüm veri seti kurallara göre (uzunluk, karakter, alt-küme ilişkisi) test edilir.
+* **📦 TypeScript Uyumlu:**
+  * Projelerinde doğrudan tip desteği ile güvenle kullanabilirsin.
 
-### 1. `TARGET_WORDS` (Çıkacak Hedef Kelimeler - ~1.900 Kelime)
-Oyunun cevap olarak seçeceği kelimelerin listesidir. 
-* **Nasıl Oluşturuldu?** Türk Dil Kurumu (TDK) sözlüğündeki 5 harfli kelimeler, Türkçe metinlerde ve altyazılarda geçen *en sık kullanılan 50.000 kelime frekans listesiyle* kesiştirildi.
-* **Neden?** Sözlükte var olan ama günlük hayatta asla kullanılmayan, oyuncuyu sinir edecek derecede zor ("BALİĞ", "AFİFE", "AKAİT" vb.) kelimeler elenerek; sadece herkes tarafından bilinen, "cuk" oturan, yaygın kök kelimeler bırakıldı.
+---
 
-### 2. `ACCEPTED_WORDS` (Kabul Edilen Tahminler - ~5.500 Kelime)
-Oyuncuların tahmin yaparken kullanabilecekleri tüm geçerli kelimelerin havuzudur. (Hedef kelimelerin tamamını da kapsar).
-* **Nasıl Oluşturuldu?** Sadece ve kesinlikle **TDK Sözlüğü'ndeki** 5 harfli Türkçe kelimeler baz alındı. 
-* **Neden?** Oyuncuların rastgele klavye vuruşlarıyla anlamsız şeyler ("LLDOG", "NADOL") yazarak oyunu kırmasını engellemek ve "HAYİR" gibi yazım yanlışlarını oyundan atmak için kelime havuzu sadece gerçek Türkçe kök kelimelerle sınırlandırıldı.
+## 🚀 Kurulum
 
-##  Kullanım (TypeScript / JavaScript / JSON)
+Modülü projenize dâhil etmek için:
 
-### TypeScript
+```bash
+npm install wordle-tr-dictionary
+```
+
+## 💻 Kullanım Örnekleri
+
+### 1. Kelime Listelerini Çekmek
 ```typescript
-import { TARGET_WORDS, ACCEPTED_WORDS } from './index';
+import { TARGET_WORDS, ACCEPTED_WORDS } from 'wordle-tr-dictionary';
 
-const answer = TARGET_WORDS[Math.floor(Math.random() * TARGET_WORDS.length)];
-const isValidGuess = (guess: string) => ACCEPTED_WORDS.includes(guess);
+// Rastgele bir hedef kelime (cevap) seçme
+const randomIndex = Math.floor(Math.random() * TARGET_WORDS.length);
+const dailyWord = TARGET_WORDS[randomIndex];
+
+console.log(`Toplam hedef kelime sayısı: ${TARGET_WORDS.length}`);
 ```
 
-### JavaScript (Node.js)
-```javascript
-const { TARGET_WORDS, ACCEPTED_WORDS } = require('./index.js');
+### 2. Doğrulama (Validation) Araçları
+Kullanıcının girdiği kelime geçerli bir Wordle tahmini mi?
+
+```typescript
+import { isValidWord, isTargetWord, normalizeWord } from 'wordle-tr-dictionary/src/validation';
+
+// Geçerli kelime kontrolü (ACCEPTED_WORDS içinde var mı?)
+console.log(isValidWord('KÂBUS')); // true (KABUS ile eşleşir)
+console.log(isValidWord('ASDFG')); // false
+
+// Günün kelimesi olmaya aday mı?
+console.log(isTargetWord('BEYİN')); // true
+console.log(isTargetWord('MARKİ')); // false (Geçerli kelimedir ama çok bilinmez, hedef olamaz)
+
+// İki kelimeyi kıyaslama / normalleştirme
+console.log(normalizeWord('kâbus')); // "KABUS" çıktısını verir
 ```
 
-### API / Ham JSON Kullanımı
-Eğer kelimeleri kendi sunucunuzdan veya uygulamanızdan çekecekseniz, ham JSON dosyasına doğrudan erişebilirsiniz:
-[words.json](words.json) üzerinden ham veriyi parse edebilirsiniz.
+---
 
-##  Motivasyon
-Bu veri setinin oluşturulma amacı, Türkçe kelime oyunları geliştirirken açık kaynakta bulunan standart veri setlerinin içindeki anlamsız hece kalıntılarını, fiil çekim hatalarını ve araya karışan İngilizce parazit kelimeleri temizleme zahmetinden geliştiricileri kurtarmaktır.
+## 🛠 Geliştiriciler İçin (Repoya Katkıda Bulunma)
 
-## 📄 Lisans ve Kullanım
-Bu proje **MIT Lisansı** ile lisanslanmıştır. İlgili lisans metni için [LICENSE](LICENSE) dosyasına bakabilirsiniz.
+Bu veri setini geliştirmek istersen:
 
-Bu kelime listesini oyunlarınızda, projelerinizde veya akademik çalışmalarınızda dilediğiniz gibi kullanabilirsiniz. Ancak **kullanım durumunda lütfen repoyu ve yazarını referans olarak gösterin.**
+1. Repoyu klonla:
+   ```bash
+   git clone https://github.com/ogzdurmus/wordle-tr-dictionary.git
+   cd wordle-tr-dictionary
+   npm install
+   ```
+2. Yeni kelimeleri `data/sources/tdk.json` dosyasına ekle.
+3. Otomatik şapka dönüşümü ve sıralama işlemleri için Build komutunu çalıştır:
+   ```bash
+   npm run build
+   ```
+4. Verinin bozulmadığından emin olmak için testleri çalıştır:
+   ```bash
+   npm test
+   ```
 
-**Örnek Atıf:**
-*Türkçe Wordle Kelime Listesi, Oğuz Durmuş tarafından oluşturulmuştur.*
+## 📄 Lisans
+Bu proje **ISC** lisansı ile lisanslanmıştır. Dilediğiniz gibi kullanabilir, projelerinizde (ticari dahil) ücretsiz olarak değerlendirebilirsiniz.
